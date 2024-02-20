@@ -5,13 +5,10 @@ import com.cherry.accounts.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping(value = "/account")
 public class AccountController {
 
     @Autowired
@@ -22,6 +19,19 @@ public class AccountController {
          AccountDto accountCreated=  accountService.createAccount(accountDto);
 
         return  new ResponseEntity<>(accountCreated, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAccountByEmail/{emailId}")
+    public  ResponseEntity<AccountDto> getAccountByEmail(@PathVariable String emailId){
+            AccountDto accountDetails =   accountService.getAccountByEmail(emailId);
+        return  new ResponseEntity<>(accountDetails, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/getAccountById/{id}")
+    public  ResponseEntity<AccountDto> getAccountById(@PathVariable Integer id){
+
+        return  accountService.getAccountDetailsById(id);
     }
 
 }
